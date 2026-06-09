@@ -1,0 +1,156 @@
+[gd_scene load_steps=2 format=3 uid="uid://c1hud123"]
+
+[ext_resource type="Script" path="res://hud.gd" id="1_hud_script"]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_hud_script")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Control"]
+layout_mode = 0
+offset_right = 350.0
+offset_bottom = 150.0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="PrestigeLabel" type="Label" parent="Control/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Prestiż: 0"
+
+[node name="HealthLabel" type="Label" parent="Control/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Zdrowie"
+
+[node name="HealthBar" type="ProgressBar" parent="Control/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+value = 100.0
+
+[node name="TempLabel" type="Label" parent="Control/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Temperatura (Zamarzanie)"
+
+[node name="TempBar" type="ProgressBar" parent="Control/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+value = 100.0
+
+[node name="CenterContainer" type="CenterContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/CenterContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="WarnLabel" type="Label" parent="Control/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Winston zamarza!"
+horizontal_alignment = 1
+
+[node name="RestPrompt" type="Label" parent="Control/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "[Naciśnij E, aby odpocząć]"
+horizontal_alignment = 1
+
+[node name="UpgradeMenu" type="PanelContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -200.0
+offset_right = 250.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/UpgradeMenu"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/UpgradeMenu/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="LvlLabel" type="Label" parent="Control/UpgradeMenu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Sir Winston - Poziom 1"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="Control/UpgradeMenu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="SzykBox" type="HBoxContainer" parent="Control/UpgradeMenu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="SzykLabel" type="Label" parent="Control/UpgradeMenu/MarginContainer/VBoxContainer/SzykBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Szyk (Styl): 12"
+
+[node name="UpgradeSzyk" type="Button" parent="Control/UpgradeMenu/MarginContainer/VBoxContainer/SzykBox"]
+layout_mode = 2
+text = "Ulepsz"
+
+[node name="ManieryBox" type="HBoxContainer" parent="Control/UpgradeMenu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ManieryLabel" type="Label" parent="Control/UpgradeMenu/MarginContainer/VBoxContainer/ManieryBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Maniery: 18"
+
+[node name="UpgradeManiery" type="Button" parent="Control/UpgradeMenu/MarginContainer/VBoxContainer/ManieryBox"]
+layout_mode = 2
+text = "Ulepsz"
+
+[node name="WigorBox" type="HBoxContainer" parent="Control/UpgradeMenu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="WigorLabel" type="Label" parent="Control/UpgradeMenu/MarginContainer/VBoxContainer/WigorBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Wigor: 16"
+
+[node name="UpgradeWigor" type="Button" parent="Control/UpgradeMenu/MarginContainer/VBoxContainer/WigorBox"]
+layout_mode = 2
+text = "Ulepsz"
+
+[node name="DlugoscBox" type="HBoxContainer" parent="Control/UpgradeMenu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="DlugoscLabel" type="Label" parent="Control/UpgradeMenu/MarginContainer/VBoxContainer/DlugoscBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Długość węża: 8"
+
+[node name="UpgradeDlugosc" type="Button" parent="Control/UpgradeMenu/MarginContainer/VBoxContainer/DlugoscBox"]
+layout_mode = 2
+text = "Ulepsz"

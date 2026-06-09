@@ -1,0 +1,280 @@
+\documentclass[12pt, letterpaper,Titlepage]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[polish]{babel}
+
+% -------------------------
+% Marginesy
+% -------------------------
+\usepackage[a4paper, margin=2.5cm]{geometry}
+
+% -------------------------
+% Interlinia i Pakiety Techniczne
+% -------------------------
+\usepackage{setspace}
+\onehalfspacing
+\usepackage{float}
+\usepackage{titlesec} % Pakiet do stylizacji nagłówków
+\usepackage{xcolor}   % Pakiet do kolorów
+
+% -------------------------
+% Stylizacja Dokumentu (NAPRAWA STYLU)
+% -------------------------
+
+% 1. Konfiguracja odnośników - teraz kolor czarny dla spisu treści
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black, % Zmienione na czarny
+    urlcolor=blue,
+    pdftitle={GentelSnake GDD}
+}
+
+% 2. Dodajemy linię pod każdym tytułem sekcji (\section)
+\titleformat{\section}
+  {\normalfont\Large\bfseries}{\thesection}{1em}{}[{\titlerule[0.8pt]}]
+
+% -------------------------
+% Grafika
+% -------------------------
+\usepackage{graphicx}
+
+% -------------------------
+% POCZĄTEK DOKUMENTU
+% -------------------------
+\begin{document}
+\begin{titlepage}
+    
+    \begin{center}
+        \vspace*{3cm}
+        {\scshape\Large Game Design Document \par} 
+        \vspace{1cm}
+        \rule{\textwidth}{1.2pt} \\[0.8cm] 
+        {\fontsize{45pt}{55pt}\selectfont \textbf{GentelSnake}} \\[0.4cm]
+        {\Large \textit{Puzzle RPG}} \\[0.6cm]
+        \rule{\textwidth}{1.2pt}
+    \end{center}
+
+    \vfill 
+
+    \begin{minipage}[t]{0.35\textwidth}
+        \begin{flushleft}
+            \large
+            \textbf{Szczegóły Projektu:}\\[0.4cm]
+            \textbf{Gatunek:} Puzzle RPG / Top-Down Crawler\\
+            \textbf{Data:} 24.03.2026
+        \end{flushleft}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.50\textwidth}
+        \begin{flushright}
+            \large
+            \textbf{Zespół Projektowy:}\\[0.4cm]
+            Marcel Cieśliński (280871) \\
+            Dawid Wojda (280904) \\[0.8cm]
+            
+            \textbf{Prowadzący:}\\
+            dr inż. Piotr Sobolewski \\[0.2cm]
+            \textbf{Przedmiot:}\\
+            Projektowanie gier komputerowych \\[0.2cm]
+            \textbf{Kierunek:}\\
+            Informatyka techniczna
+        \end{flushright}
+    \end{minipage}
+
+    \vspace*{1.5cm}
+\end{titlepage}
+
+% --- Automatyczny spis treści ---
+\newpage
+{
+\singlespacing
+\small % Zmniejszona czcionka i pojedynczy odstęp, by zmieścić na jednej stronie
+\tableofcontents
+}
+\thispagestyle{empty}
+
+
+\newpage
+\section {Ogólny opis gry}
+ {Puzzle RPG z elementami Top-Down Dungeon Crawlera} osadzone w wiktoriańskim świecie gadów. Gracz wciela się w arystokratę, Sir Winstona, który unika zamarznięcia (hibernacji), nieustannie szukając źródeł ciepła.
+Gra jest przekształceniem klasycznego „Snake’a”. Ruch jest płynny i wektorowy wąż porusza się ze stałą prędkością i nie może się zatrzymać. Główny hitbox stanowi cylinder bohatera zderzenie z przeszkodą nie kończy gry, lecz powoduje rykoszet. Gra opiera się na znanym schemacie, dzięki czemu jest łatwa do opanowania. Jednocześnie fizyka odbić i konieczność planowania trasy w ruchu sprawiają, że później staje się wymagającą zręcznościówką.
+
+\section {Ogólny zarys fabuły}
+W świecie gry zmiennocieplne gady polegają na centralnym piecu. Buntownicy kradną jego rdzeń, co obniża temperaturę miasta. Winston musi się stale poruszać, by utrzymać ciepło i uniknąć hibernacji. Odzyskanie rdzenia to główny cel gry. Fabuła bezpośrednio uzasadnia mechanikę ciągłego ruchu.
+
+\vspace{1cm} 
+\textbf{Posiadłość Rodowa}
+Przygoda zaczyna się w rezydencji bohatera, gdzie zauważa on zamarzającą herbatę. Wyrusza na ulice miasta w celu zbadania przyczyny awarii. Rozpoczęcie gry w bezpiecznym środowisku daje graczowi czas na zapoznanie się z systemem sterowania oraz buduje wstępną motywację postaci.
+\vspace{1cm}
+
+\textbf{Zadymione Ulice Londinium}
+Bohater ściga buntowników przez zadymione smogiem miasto, odkrywając pierwsze ślady spisku. Ograniczona widoczność zwiększa zagrożenie i wymusza ostrożniejsze planowanie trasy.
+\vspace{1cm}
+
+\textbf{Fabryka Zegarmistrza}
+Winston dociera do industrialnej kryjówki anarchistów i odkrywa, że kradzież rdzenia zlecił Architekt Mrozu. Nowe, maszynowe otoczenie urozmaica wizualnie grę, a ujawnienie głównego przeciwnika podnosi stawkę i motywuje do dalszej rozgrywki.
+\vspace{1cm}
+
+\textbf{Królewskie Ogrody Botaniczne}
+Pościg trafia do niebezpiecznych szklarni. Bohater przedziera się wąskimi korytarzami za wrogiem. Zwężone ścieżki zwiększają trudność i napięcie przed finałem.
+\vspace{1cm}
+
+\textbf{Ekspres Transkontynentalny}
+Finał rozgrywa się w pędzącym pociągu. Bohater pokonuje Architekta Mrozu i odzyskuje rdzeń pieca. Dynamiczna sceneria domyka opowieść.
+
+\section{Core Game Loop}
+Cykl rozgrywki opiera się na powtarzalnym schemacie działań napędzającym postępy gracza i składa się z pięciu etapów:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{core_loop.png} 
+    \caption{Schemat Głównej Pętli Gry (Core Game Loop)}
+    \label{fig:core_loop}
+\end{figure}
+
+Jasna pętla rozgrywki wyznacza cele. Przeplatanie zręczności z zarządzaniem w bezpiecznych strefach reguluje tempo i zapobiega znużeniu.
+\section {Motywacja Gracza}
+Rozgrywka łączy wyzwanie zręcznościowe z poczuciem postępu. Motywacją jest odkrywanie świata i losów Sir Winstona.
+
+\subsection {Abstrakcyjny świat gry}
+Gra łączy wiktoriańskie realia z postaciami gadów. Odkrywanie adaptacji ludzkich wynalazków do potrzeb  społeczeństwa węży stanowi główny cel poznawczy. Taki kontrast wizualny i tematyczny buduje ciekawość gracza oraz angażuje go w eksplorację świata.
+\subsection {Liniowa fabuła i presja czasu}
+Rozgrywka opiera się na liniowej historii z celem odzyskania rdzenia pieca przed zamarznięciem bohatera. Motyw tykającego zegara logicznie uzasadnia ciągły ruch, a konflikt fabularny i podział na etapy silnie motywują do przechodzenia poziomów.
+
+\subsection {Rozwój bohatera i estetyka}
+Zbieranie itemów odblokowuje elementy garderoby, które poprawiają statystyki i wydłużają wizualnie węża, dając widoczny dowód postępów. Powiązanie wyglądu z parametrami motywuje do przeszukiwania mapy i zdobywania punktów. Dodatkowo punkty doświadczenia pozwalają ulepszać statystyki pomocne na kolejnych poziomach.
+\section{Mechaniki}
+
+\begin{itemize}
+\item \textbf{Płynny ruch:} Postać porusza się stale naprzód z płynnym sterowaniem w 360 stopniach. Promień skrętu zależy od Wigoru. Zastąpienie sztywnej siatki ruchem wektorowym uelastycznia rozgrywkę i podnosi jej poziom trudności.
+
+\item \textbf{Cylinder jako Hitbox:} Przód nakrycia głowy to jedyny punkt interakcji (zbieranie, aktywacja, zadawanie obrażeń). Oddzielenie strefy aktywnej od reszty wrażliwego na ataki ciała wymusza na graczu taktyczne pozycjonowanie.
+
+\item \textbf{Mechanika Rykoszetów:} Zderzenie z przeszkodą ogłusza i odbija postać. Rykoszety zastępują natychmiastową śmierć, umożliwiając manewrowanie w ciasnych korytarzach. To łagodniejsza kara, zapobiegająca frustrującym resetom postępu lokacji.
+
+\item \textbf{Ciepłe Strefy (Safe Zones):} Rozsiane na mapie źródła ciepła pozwalają na bezpieczny postój bez utraty HP. Dają one graczowi przerwę od akcji na przejrzenie ekwipunku i czytanie dialogów NPC bez konieczności manewrowania postacią.
+
+\item \textbf{Dynamiczna Długość Ciała:} Zbieranie zasobów wydłuża bohatera, powiększając jego wrażliwą strefę. Wymusza to planowanie szerszych zakrętów, by uniknąć zablokowania lub ataku na ogon, co naturalnie skaluje trudność poziomu.
+\end{itemize}
+\section{Eksploracja}
+
+\begin{itemize}
+\item \textbf{Korytarze i Skróty:} Mapy przypominają dungeon crawlery, pełne rozgałęzień i zamkniętych bram. Aby odblokować ścieżki, gracz uderza cylindrem w przełączniki.
+\item \textbf{Wyzwania Środowiskowe (Puzzle):} Wyzwania logiczno-zręcznościowe wymagają aktywacji obiektów w odpowiedniej kolejności przy zachowaniu ciągłego ruchu. Przełamuje to monotonię i nagradza precyzję.
+\item \textbf{Ograniczona widoczność:} Gęsty dym działa jak mgła wojny, zmuszając do zapamiętywania mapy i orientacji na słuch. Buduje to napięcie i wymusza ostrożne planowanie.
+\item \textbf{Sekretne Komnaty:} Zniszczalne ściany kryją przejścia do bezpiecznych stref z zasobami. Ich odkrywanie nagradza dociekliwość i daje chwilę wytchnienia od dynamicznej akcji.
+\end{itemize}
+
+\section{Walka}
+System walki opiera się na ciągłym ruchu i odpowiednim pozycjonowaniu postaci.
+
+\begin{itemize}
+\item \textbf{Atak Frontalny:} Obrażenia zadaje się przez czołowe zderzenie, co zużywa Maniery (odpowiednik many). Ciosy w plecy lub po rykoszecie od ściany dają obrażenia krytyczne, premiując precyzyjne manewrowanie.
+\item \textbf{Obrona i strefa wrażliwa:} Wrogowie celują wyłącznie w wydłużający się ogon bohatera. Utrata zdrowia przy trafieniu wymusza ciągłą ucieczkę i unikanie ślepych zaułków.
+\item \textbf{Wykorzystanie otoczenia w Walce:} Atak na opancerzonych wrogów ogłusza i odrzuca bohatera. Wymaga to naprowadzania ich na pułapki środowiskowe, co promuje wykorzystanie mapy w starciach.
+\item \textbf{Walki z Bossami:} Areny stają się zręcznościowymi zagadkami. Zamiast uderzać bossa, gracz musi taranować obiekty w odpowiedniej kolejności, co stanowi ostateczny test opanowania poruszania się.
+\end{itemize}
+
+\vspace{1 cm}
+
+\section{Rozwój postaci}
+
+\subsection{Punkty prestiżu}
+Gracz zdobywa punkty doświadczenia za pokonywanie wrogów. Awans pozwala ulepszać statystyki i ekwipunek, dając satysfakcjonujące poczucie postępu.
+
+\subsection{Rozwój atrybutów}
+Punkty z awansu można przydzielić w Szyk (odporność), Maniery (siła uderzenia) lub Wigor (promień skrętu). Personalizacja statystyk pozwala dostosować styl ruchu i ułatwia manewrowanie.
+
+\subsection{Ekwipunek i przedmioty użytkowe}
+Zmiana cylindra modyfikuje główny punkt kolizji, a przedmioty użytkowe leczą lub niwelują utrudnienia środowiskowe. Użycie elementów garderoby zamiast klasycznej broni buduje unikalny, spójny styl gry.
+
+\subsection{Mechanika wydłużania postaci}
+Z czasem ciało bohatera się wydłuża. Większa masa ułatwia taranowanie, ale długi ogon utrudnia ruch w wąskich przestrzeniach, co naturalnie skaluje poziom trudności i wyzwanie taktyczne.
+
+\section{Mechaniki fabularne}
+
+\begin{itemize}
+\item \textbf{Aktywna Pauza Dialogowa:} Interakcja z NPC wstrzymuje czas i fizykę. Pozwala to na spokojną analizę dialogów i wybór opcji bez ryzyka utraty HP w ruchu.
+\item \textbf{Wstawki Fabularne (Cutscenki):} Krótkie sekwencje na silniku gry dynamizują narrację i budują kontekst dla kolejnych wyzwań na mapie.
+\item \textbf{System karmy (Etykieta):} Gra śledzi zniszczenia otoczenia. Unikanie ich podnosi wskaźnik Etykiety, co odblokowuje unikalne linie dialogowe oraz nagrody.
+\item \textbf{Fabularny timer (Zamarzanie):} Zbyt długa eksploracja wywołuje efekt szronu i spowalnia muzykę. Ten ogranicznik czasowy nakłada presję i wymusza szybkie podejmowanie decyzji.
+\item \textbf{Ślady Spisku (Lore):} Uderzanie w specyficzne obiekty (np. skrzynki) daje dostęp do gazet i telegramów. Lektura w Ciepłych Strefach pozwala stopniowo odkryć tożsamość głównego wroga.
+\end{itemize}
+\vspace{1,5cm}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{mechaniki_fabularne.png} 
+    \caption{Scenariusze mechaniki fabularnej: Ukazanie działania Etykiet.}
+    \label{fig:campain_mechanic}
+\end{figure}
+\vspace{1,5cm}
+\section{UI (User Interface)}
+
+\begin{itemize}
+\item \textbf{Pasek Zdrowia:} Zdrowie obrazuje filiżanka obrażenia powodują wylewanie płynu i pęknięcia. Zastąpienie paska numerycznego tym elementem pomaga wczuć się w grę i zwiększa spójność wizualną.
+\item \textbf{Licznik czasu:} Ogranicznikiem czasowym jest termometr, którego poziom spada poza bezpiecznymi strefami. Czytelnie ostrzega on o końcu gry bez użycia rozpraszających cyfr.
+\item \textbf{Pasek doświadczenia:} Zdobywane punkty prestiżu wizualizuje rozwijająca się miara. Jej zapełnienie informuje o możliwości awansu w przedsiębiorstwie krawieckim.
+\item \textbf{Menu Ekwipunku i Pauzy:} Ekrany pauzy przypominają dziennik, a wybór modyfikatorów stylizowany jest na katalog kapelusznika.
+\item \textbf{Aktywny HUD:} Interfejs staje się półprzezroczysty, gdy postać zbliża się do krawędzi ekranu. Zapobiega to zasłanianiu przeszkód i ułatwia celowanie.
+\end{itemize}
+
+\vspace{1,5cm}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{UI_ekwipunek.png} 
+    \caption{Makieta interfejsu (HUD) - Ekwipunek}
+    \label{fig:ui_mockup_hud_eq}
+\vspace{1.5cm}
+\end{figure}
+
+\section{Koncepcja oprawy graficznej}
+Wizualna strona gry opiera się na wyraźnym kontraście między dymiącym światem industrialnej rewolucji a przerysowanym zachowaniem arystokracji. Gra ma przypominać mroczną baśń, w której absurdalny humor, jak wąż w cylindrze, traktowany jest z powagą.
+
+\section{Styl Graficzny}
+Projekt wykorzystuje pixel art, który łączy estetykę retro z nowoczesnym renderowaniem 2D. Stonowaną paletę barw przełamują jaskrawe akcenty, co ułatwia graczowi szybkie odróżnienie elementów interaktywnych i zagrożeń od tła. Zastosowanie dynamicznego oświetlenia i efektów cząsteczkowych skutecznie buduje klimat i poprawia czytelność plansz.
+
+\section{Elementy pixel-art}
+\begin{itemize}
+\item \textbf{Animacja Głównego Bohatera:} Ciało Sir Winstona składa się z pixel-artowych segmentów podążających za głową (cylindrem). Zależnie od wybranego ekwipunku, postać zyskuje animowane detale, takie jak peleryny czy zbroje.
+\item \textbf{Ekspresja Kolizji:} Każdy rykoszet od ściany posiada dedykowany efekt wizualny (iskry, kruszący się tynk), mocne drżenie ekranu oraz chwilowe zamrożenie klatki animacji. Nadaje to uderzeniom ciężar i zwiększa satysfakcję z idealnego odbicia.
+\item \textbf{Projekty Przeciwników:} Wrogowie mają silnie zróżnicowane sylwetki – od zmechanizowanych szczurów-anarchistów po opancerzone ropuchy w hełmach policji. Ich unikalny design natychmiastowo komunikuje graczowi ich funkcję oraz typ ataku.
+\end{itemize}
+
+\subsection{Świat gry}
+Został zaprojektowany z myślą o czytelności mechanik. Obiekty interaktywne, jak zawory czy zniszczalne wazy, wyraźnie odcinają się od tła. Wzory na podłogach (np. linie luksusowych dywanów lub rury) pomagają w ocenie i planowaniu kątów rykoszetu. Wielowarstwowe efekty środowiskowe, takie jak gęsty smog, tworzą iluzję głębi mimo widoku z góry.
+
+\section{Dźwięk i muzyka}
+\subsection{Muzyka}
+Ścieżka dźwiękowa opiera się na szybkim tempie i klasycznych instrumentach. Taki dobór muzyki z jednej strony buduje poważny klimat, a z drugiej narzuca graczowi dynamiczne poruszanie się po poziomach.
+
+\begin{itemize}
+    \item \textbf{Dynamiczne Tempo (System Zamarzania):} Muzyka zintegrowana jest z mechaniką temperatury postaci. Spadek ciepła bohatera powoduje stopniowe spowolnienie utworu, tworząc naturalny, dźwiękowy system ostrzegania o zagrożeniu.
+\end{itemize}
+
+\subsection{Dialogi}
+Wypowiedzi prezentowane są tekstowo u dołu ekranu, a język stylizowany jest na arystokratyczny. Buduje to tożsamość świata gry i uwiarygadnia postacie, zachowując czytelność całości.
+
+\subsection{SFX}
+Każda interakcja z otoczeniem oraz odbicie od ściany posiada wyraźny sygnał dźwiękowy. Stanowi on kluczowy element informacji zwrotnej, pozwalając na szybką ocenę sytuacji i wyczucie rytmu uderzeń podczas zręcznościowej akcji.
+
+\section{Poziomy}
+\subsection{Projekty Poziomów (Środowisko Gry)}
+Świat gry podzielony jest na tematyczne strefy. Każda z lokacji wprowadza nowe przeszkody środowiskowe, które zmuszają gracza do zmiany taktyki i dostosowania sposobu nawigacji.
+
+\subsection{Poziom 1: Posiadłość Rodowa} 
+Etap ten charakteryzuje się szerokimi przestrzeniami, które ułatwiają naukę sterowania. Jedynym utrudnieniem są plamy płynu powodujące chwilową utratę kontroli nad kątem skrętu postaci. Rozpoczęcie gry w takich warunkach pozwala na swobodne opanowanie rykoszetów bez ryzyka szybkiej porażki.
+
+\subsection{Poziom 2: Zadymione Ulice Londinium}
+Główną przeszkodą jest tu gęsty dym drastycznie ograniczający pole widzenia wokół postaci. Zniszczenie latarni uderzeniem chwilowo rozświetla większy obszar mapy. Taki system mgły wymusza ostrożniejszą nawigację i premiuje zapamiętywanie układu korytarzy.
+
+\subsection{Poziom 3: Fabryka Zegarmistrza}
+Środowisko zyskuje elementy dynamiczne w postaci taśmociągów i zębatek. Wejście na zębatkę wymusza nagłą zmianę kierunku o 90 stopni, natomiast poruszające się taśmociągi zauważalnie modyfikują prędkość poruszania się bohatera.
+
+\subsection{Poziom 4: Królewskie Ogrody Botaniczne}
+Strefa posiada strukturę ciasnego labiryntu z niebezpiecznymi krawędziami. Zderzenie z kolczastą ścianą zadaje bezpośrednie obrażenia zamiast standardowego ogłuszenia. Wąskie przejścia połączone z rosnącym ogonem węża stanowią duże wyzwanie zręcznościowe wymagające perfekcyjnego sterowania.
+
+\subsection{Poziom 5: Ekspres Transkontynentalny}
+Plansza jest sztucznie zwężona i automatycznie przesuwa się w jednym kierunku. Utrzymanie się w miejscu przez zbyt długi czas skutkuje wypadnięciem poza ekran i utratą zdrowia. Zastosowanie tej mechaniki wymusza nieustanne parcie do przodu, stanowiąc wymagające podsumowanie głównych założeń rozgrywki.
+
+\end{document}

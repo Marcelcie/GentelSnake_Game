@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://c1pocisk123"]
+
+[ext_resource type="Script" path="res://pocisk.gd" id="1_pocisk_script"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pocisk"]
+radius = 10.0
+
+[node name="Pocisk" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("1_pocisk_script")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_pocisk")

@@ -1,0 +1,173 @@
+[gd_scene format=3 uid="uid://d2p0i6r4irvrw"]
+
+[ext_resource type="Script" uid="uid://p2fgi544clxb" path="res://winston.gd" id="1_wd15o"]
+[ext_resource type="Script" path="res://ciepla_strefa.gd" id="3_ciepla"]
+[ext_resource type="Texture2D" uid="uid://b2w13xqlbi8gh" path="res://icon.svg" id="2_3fwk8"]
+[ext_resource type="PackedScene" uid="uid://c1hud123" path="res://hud.tscn" id="4_hud"]
+[ext_resource type="PackedScene" uid="uid://c1moneta123" path="res://moneta.tscn" id="5_moneta"]
+[ext_resource type="PackedScene" uid="uid://c1przeciwnik123" path="res://przeciwnik.tscn" id="6_przeciwnik"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5tgxs"]
+size = Vector2(50, 50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_horiz"]
+size = Vector2(1200, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vert"]
+size = Vector2(40, 700)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_block1"]
+size = Vector2(250, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_block2"]
+size = Vector2(40, 250)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wd15o"]
+size = Vector2(200, 200)
+
+[node name="Poziom" type="Node2D" unique_id=1956923284]
+
+[node name="Winston" type="CharacterBody2D" parent="." unique_id=488092108]
+position = Vector2(200, 200)
+script = ExtResource("1_wd15o")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Winston" unique_id=2133791786]
+texture = ExtResource("2_3fwk8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Winston" unique_id=553074543]
+shape = SubResource("RectangleShape2D_5tgxs")
+
+[node name="Camera2D" type="Camera2D" parent="Winston" unique_id=1742557887]
+limit_left = 0
+limit_top = 0
+limit_right = 1152
+limit_bottom = 648
+editor_draw_limits = true
+
+[node name="sciana_gora" type="StaticBody2D" parent="."]
+position = Vector2(576, 10)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="sciana_gora"]
+shape = SubResource("RectangleShape2D_horiz")
+
+[node name="Sprite2D" type="Sprite2D" parent="sciana_gora"]
+scale = Vector2(9.375, 0.3125)
+texture = ExtResource("2_3fwk8")
+modulate = Color(0.2, 0.2, 0.25, 1)
+
+[node name="sciana_dol" type="StaticBody2D" parent="."]
+position = Vector2(576, 638)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="sciana_dol"]
+shape = SubResource("RectangleShape2D_horiz")
+
+[node name="Sprite2D" type="Sprite2D" parent="sciana_dol"]
+scale = Vector2(9.375, 0.3125)
+texture = ExtResource("2_3fwk8")
+modulate = Color(0.2, 0.2, 0.25, 1)
+
+[node name="sciana_lewa" type="StaticBody2D" parent="."]
+position = Vector2(10, 324)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="sciana_lewa"]
+shape = SubResource("RectangleShape2D_vert")
+
+[node name="Sprite2D" type="Sprite2D" parent="sciana_lewa"]
+scale = Vector2(0.3125, 5.46875)
+texture = ExtResource("2_3fwk8")
+modulate = Color(0.2, 0.2, 0.25, 1)
+
+[node name="sciana_prawa" type="StaticBody2D" parent="."]
+position = Vector2(1142, 324)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="sciana_prawa"]
+shape = SubResource("RectangleShape2D_vert")
+
+[node name="Sprite2D" type="Sprite2D" parent="sciana_prawa"]
+scale = Vector2(0.3125, 5.46875)
+texture = ExtResource("2_3fwk8")
+modulate = Color(0.2, 0.2, 0.25, 1)
+
+[node name="blok1" type="StaticBody2D" parent="."]
+position = Vector2(350, 150)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="blok1"]
+shape = SubResource("RectangleShape2D_block1")
+
+[node name="Sprite2D" type="Sprite2D" parent="blok1"]
+scale = Vector2(1.953, 0.3125)
+texture = ExtResource("2_3fwk8")
+modulate = Color(0.2, 0.2, 0.25, 1)
+
+[node name="blok2" type="StaticBody2D" parent="."]
+position = Vector2(800, 498)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="blok2"]
+shape = SubResource("RectangleShape2D_block1")
+
+[node name="Sprite2D" type="Sprite2D" parent="blok2"]
+scale = Vector2(1.953, 0.3125)
+texture = ExtResource("2_3fwk8")
+modulate = Color(0.2, 0.2, 0.25, 1)
+
+[node name="blok3" type="StaticBody2D" parent="."]
+position = Vector2(350, 450)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="blok3"]
+shape = SubResource("RectangleShape2D_block2")
+
+[node name="Sprite2D" type="Sprite2D" parent="blok3"]
+scale = Vector2(0.3125, 1.953)
+texture = ExtResource("2_3fwk8")
+modulate = Color(0.2, 0.2, 0.25, 1)
+
+[node name="blok4" type="StaticBody2D" parent="."]
+position = Vector2(800, 200)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="blok4"]
+shape = SubResource("RectangleShape2D_block2")
+
+[node name="Sprite2D" type="Sprite2D" parent="blok4"]
+scale = Vector2(0.3125, 1.953)
+texture = ExtResource("2_3fwk8")
+modulate = Color(0.2, 0.2, 0.25, 1)
+
+[node name="Ciepla_Strefa" type="Area2D" parent="." unique_id=472188892]
+position = Vector2(576, 324)
+script = ExtResource("3_ciepla")
+
+[node name="Sprite2D" type="Sprite2D" parent="Ciepla_Strefa" unique_id=396869237]
+scale = Vector2(1.5625, 1.5625)
+texture = ExtResource("2_3fwk8")
+modulate = Color(0.9, 0.5, 0.1, 0.25)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ciepla_Strefa" unique_id=1629168404]
+shape = SubResource("RectangleShape2D_wd15o")
+debug_color = Color(0.74484116, 0.46073472, 0.14207798, 0.41960785)
+
+[node name="HUD" parent="." instance=ExtResource("4_hud")]
+
+[node name="Moneta1" parent="." instance=ExtResource("5_moneta")]
+position = Vector2(180, 480)
+
+[node name="Moneta2" parent="." instance=ExtResource("5_moneta")]
+position = Vector2(576, 100)
+
+[node name="Moneta3" parent="." instance=ExtResource("5_moneta")]
+position = Vector2(980, 480)
+
+[node name="Moneta4" parent="." instance=ExtResource("5_moneta")]
+position = Vector2(980, 180)
+
+[node name="Moneta5" parent="." instance=ExtResource("5_moneta")]
+position = Vector2(180, 324)
+
+[node name="Przeciwnik1" parent="." instance=ExtResource("6_przeciwnik")]
+position = Vector2(250, 450)
+
+[node name="Przeciwnik2" parent="." instance=ExtResource("6_przeciwnik")]
+position = Vector2(900, 200)
+
+[node name="Przeciwnik3" parent="." instance=ExtResource("6_przeciwnik")]
+position = Vector2(576, 500)
