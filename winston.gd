@@ -190,6 +190,7 @@ func shoot_ricochet() -> void:
 	var pocisk_scene = load("res://pocisk.tscn")
 	if pocisk_scene:
 		var pocisk = pocisk_scene.instantiate()
+		pocisk.add_collision_exception_with(self)
 		pocisk.global_position = global_position + Vector2.RIGHT.rotated(rotation) * 40.0
 		pocisk.velocity = Vector2.RIGHT.rotated(rotation) * 500.0
 		pocisk.damage = 10 + (maniery - 10) * 2
